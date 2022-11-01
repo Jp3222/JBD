@@ -4,9 +4,13 @@
  */
 package com.jbd.conexion;
 
+import static com.jbd.Exeption.ExeptionPrinter.pwExeption;
 import com.jbd.interfaces.MetodosBasicos;
 import com.jbd.interfaces.MetodosBasicosCompuestos;
+import com.jbd.util.Func;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -84,8 +88,13 @@ public class Conexion extends BD implements MetodosBasicos, MetodosBasicosCompue
         return ejc.select(tabla, campos, where);
     }
 
+    public void closeST() {
+        ejc.closeST();
+    }
+
     public void closeRS() {
         ejc.closeRS();
+        ejc.closeST();
     }
 
     @Override
@@ -106,12 +115,27 @@ public class Conexion extends BD implements MetodosBasicos, MetodosBasicosCompue
 
     @Override
     public ResultSet select(String tabla) {
-    return ejc.select(tabla, "*", null);
-            }
+        return ejc.select(tabla, "*", null);
+    }
+
+    public Connection getCn() {
+        return cn;
+    }
 
     @Override
     public ResultSet select(String tabla, String campos) {
         return ejc.select(tabla, campos, null);
     }
 
+    public String getCampos(String... campos) {
+        return Func.getCampos(campos);
+    }
+
+    public String getDatos(String... datos) {
+        return Func.getDatos(datos);
+    }
+
+    public String getCamposDatos(String[] campos, String[] datos) {
+        return Func.getCamposDatos(campos, datos);
+    }
 }

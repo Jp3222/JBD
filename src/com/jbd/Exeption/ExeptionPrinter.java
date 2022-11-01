@@ -14,8 +14,8 @@ import java.io.PrintWriter;
  */
 public interface ExeptionPrinter {
 
-    BufferedOutputStream bosExeption = new BufferedOutputStream(System.out);
-    PrintWriter pwExeption = new PrintWriter(bosExeption);
+    final BufferedOutputStream bosExeption = new BufferedOutputStream(System.out);
+    final PrintWriter pwExeption = new PrintWriter(bosExeption);
 
     default void closeExeptionBuffer() {
         try {

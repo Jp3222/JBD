@@ -4,6 +4,7 @@
  */
 package com.jbd.conexion;
 
+import com.jbd.Exeption.ExeptionPrinter;
 import com.jbd.sql.SQL;
 import java.io.PrintStream;
 import java.sql.DriverManager;
@@ -19,12 +20,12 @@ import java.util.logging.Logger;
  *
  * @author jp
  */
-public abstract class BD {
+public abstract class BD implements ExeptionPrinter {
 
     protected Connection cn;
     protected Statement st;
     protected ResultSet rs;
-    protected SQL sql;
+    protected final SQL sql;
     //
     private Properties propiedades;
     private String usuario, contra;
@@ -34,6 +35,7 @@ public abstract class BD {
     protected BD(String url) {
         this.url = url;
         this.opcion = 0;
+        this.sql = new SQL();
         this.conectar();
     }
 
@@ -41,6 +43,7 @@ public abstract class BD {
         this.propiedades = propiedades;
         this.url = url;
         this.opcion = 1;
+        this.sql = new SQL();
         this.conectar();
     }
 
@@ -49,6 +52,7 @@ public abstract class BD {
         this.contra = contra;
         this.url = url;
         this.opcion = 2;
+        this.sql = new SQL();
         this.conectar();
     }
 
@@ -71,7 +75,8 @@ public abstract class BD {
             }
         } catch (SQLException e) {
             System.out.println("Error de conexion " + e.getMessage());
-            e.printStackTrace(new PrintStream(System.out));
+            e.printStackTrace(pwExeption);
+            closeExeptionBuffer();
         }
     }
 
@@ -79,7 +84,9 @@ public abstract class BD {
         try {
             this.cn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+            ex.printStackTrace(pwExeption);
+            closeExeptionBuffer();
         }
     }
 

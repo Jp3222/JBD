@@ -20,7 +20,7 @@ public class SQL implements SQLMetodosBasicos, Sintaxis {
 
     @Override
     public String insert(String tabla, String campos, String datos) {
-        String sql = INSERT + "into " + tabla;
+        String sql = INSERT + " into " + tabla;
         if (campos != null && !campos.isEmpty()) {
             sql += "(" + campos + ")";
         }
@@ -30,7 +30,7 @@ public class SQL implements SQLMetodosBasicos, Sintaxis {
 
     @Override
     public String update(String tabla, String kv, String where) {
-        String sql = UPDATE + tabla + "set " + kv + " where " + where;
+        String sql = UPDATE + " " + tabla + " set " + kv + " where " + where;
         return sql;
     }
 
@@ -46,13 +46,12 @@ public class SQL implements SQLMetodosBasicos, Sintaxis {
         if (campos != null && !campos.isEmpty()) {
             sql += " " + campos;
         } else {
-            sql += "*";
+            sql += " *";
         }
-        
         sql += " from " + tabla;
-        
+
         if (where != null && !where.isEmpty()) {
-            sql += " where" + where;
+            sql += " where " + where;
         }
         return sql;
     }

@@ -79,6 +79,7 @@ class Ejecutor implements MetodosBasicos, ExeptionPrinter {
     @Override
     public ResultSet select(String tabla, String campos, String where) {
         try {
+            st = cn.createStatement();
             rs = st.executeQuery(sql.select(tabla, campos, where));
             return rs;
         } catch (SQLException e) {
